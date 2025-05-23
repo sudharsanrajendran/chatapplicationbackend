@@ -16,4 +16,12 @@ public class RegisterRequest {
         this.password = password;
     }
 // Getters and setters
+    public String getUsername() {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'getUsername'");
+    }
+    public RegisterRequest getPhoneNumber() {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'getPhoneNumber'");
+    }
 }

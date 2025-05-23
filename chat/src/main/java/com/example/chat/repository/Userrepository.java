@@ -10,6 +10,8 @@ import com.example.chat.database.User;
 @Repository
 public interface Userrepository extends JpaRepository<User, Long> {
     Optional<User> findByEmail(String email);
-    Optional<User> findById(Long id);
-    List<User> findAllByIdNot(Long id);
+     List<User> findByEmailNot(String email);
+     List<User>findByUsernameContainingIgnoreCase(String username);
+
+
 }

@@ -28,7 +28,9 @@ public class SecurityConfig {
 public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
     http.csrf(csrf -> csrf.disable())
         .authorizeHttpRequests(requests -> requests
-            .requestMatchers("/login", "/register", "/all","/send","/history","/chatroom", "/ws/**").permitAll()  // allow all ws endpoints
+            .requestMatchers("/login", "/register", "/all","/send","/history","/chatroom","/getall",
+            "/{roomId}/between","/{roomId}","/status","/search",
+            "/ws/**").permitAll()  // allow all ws endpoints
             .anyRequest().authenticated())
         .sessionManagement(management -> management.sessionCreationPolicy(SessionCreationPolicy.STATELESS));
 

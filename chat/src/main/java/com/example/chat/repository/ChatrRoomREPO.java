@@ -9,6 +9,4 @@ public interface ChatrRoomREPO extends JpaRepository<ChatRoom,Long>{
 Optional<ChatRoom> findBySenderAndReceiver(User sender, User receiver);
 
 
-
-
 }

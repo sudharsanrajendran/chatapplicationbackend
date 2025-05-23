@@ -4,6 +4,11 @@ public class ChatMessageDto {
      private Long senderId;
     private Long receiverId;
     private String content;
+    public ChatMessageDto(Long senderId, Long receiverId, String content) {
+        this.senderId = senderId;
+        this.receiverId = receiverId;
+        this.content = content;
+    }
     public Long getSenderId() {
         return senderId;
     }

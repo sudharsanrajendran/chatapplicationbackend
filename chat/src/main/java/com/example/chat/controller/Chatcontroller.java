@@ -4,17 +4,20 @@ package com.example.chat.controller;
 
 
 
+
 import org.springframework.beans.factory.annotation.Autowired;
 
 import org.springframework.messaging.handler.annotation.DestinationVariable;
 import org.springframework.messaging.handler.annotation.MessageMapping;
 import org.springframework.messaging.simp.SimpMessageSendingOperations;
-
 import org.springframework.web.bind.annotation.RestController;
 
 import com.example.chat.Dto.ChatMessageDto;
 
+import com.example.chat.repository.MessageRepository;
+import com.example.chat.repository.Userrepository;
 import com.example.chat.services.Chatservice;
+import com.example.chat.utils.JwtUtil;
 @RestController
 public class Chatcontroller {
 
@@ -23,6 +26,12 @@ public class Chatcontroller {
 
     @Autowired
     Chatservice chatservice;
+    @Autowired JwtUtil jwtUtil;
+
+    @Autowired Userrepository userrepository;
+    @Autowired MessageRepository messageRepository;
+
+
 
   @MessageMapping("/chat/{roomId}")
 public void processMessage(@DestinationVariable Long roomId, ChatMessageDto msg) {
@@ -38,6 +47,7 @@ public void processMessage(@DestinationVariable Long roomId, ChatMessageDto msg)
         e.printStackTrace();
     }
 }
+
 
 }
 
