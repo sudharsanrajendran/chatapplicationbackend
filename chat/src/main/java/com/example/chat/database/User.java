@@ -32,6 +32,16 @@ public class User {
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;
 
+    private String DeviceToken;
+
+    public String getDeviceToken() {
+        return DeviceToken;
+    }
+
+    public void setDeviceToken(String deviceToken) {
+        DeviceToken = deviceToken;
+    }
+
     // JPA lifecycle callback before inserting
     @PrePersist
     public void prePersist() {

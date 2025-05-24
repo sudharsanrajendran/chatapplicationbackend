@@ -27,13 +27,16 @@ public class Chatservice {
     @Autowired
     private Userrepository userRepo;
 
+    @Autowired
+    private Fcmservice fcmService;
+
     public void saveMessage(ChatMessageDto chatMessage) {
         User sender = userRepo.findById(chatMessage.getSenderId()).orElseThrow(() ->
                 new RuntimeException("Sender not found"));
         User receiver = userRepo.findById(chatMessage.getReceiverId()).orElseThrow(() ->
                 new RuntimeException("Receiver not found"));
 
-        // 🔍 Try to find existing chat room between sender & receiver (in any order)
+        // Find existing chat room between sender & receiver
         Optional<ChatRoom> existingRoom = findChatRoomBetweenUsers(sender, receiver);
 
         ChatRoom chatRoom = existingRoom.orElseGet(() -> {
@@ -45,7 +48,7 @@ public class Chatservice {
             return savedRoom;
         });
 
-        // 💬 Save the message under that chat room
+        // Save the message under that chat room
         message msg = new message();
         msg.setChatRoom(chatRoom);
         msg.setSender(sender);
@@ -55,13 +58,22 @@ public class Chatservice {
 
         message savedMessage = messageRepo.save(msg);
 
-        // ✅ Log output
+        // Log output
         System.out.println("📤 Message sent successfully!");
         System.out.println("   ➤ ChatRoom ID: " + chatRoom.getId());
         System.out.println("   ➤ From: " + sender.getEmail());
         System.out.println("   ➤ To: " + receiver.getEmail());
         System.out.println("   ➤ Message: " + savedMessage.getMessageContent());
         System.out.println("   ➤ Timestamp: " + savedMessage.getTimestamp());
+
+        // Send push notification if receiver has device token
+        if (receiver.getDeviceToken() != null && !receiver.getDeviceToken().isEmpty()) {
+            fcmService.sendNotification(
+                receiver.getDeviceToken(),
+                sender.getUsername(),
+                savedMessage.getMessageContent()
+            );
+        }
     }
 
     private Optional<ChatRoom> findChatRoomBetweenUsers(User user1, User user2) {

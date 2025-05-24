@@ -29,7 +29,7 @@ private User receiver;
     @JoinColumn(name = "room_id")
     private ChatRoom chatRoom;
 
-    private String messageContent;
+    private static String messageContent;
 
     private LocalDateTime timestamp;
 
@@ -70,7 +70,7 @@ private User receiver;
         this.receiver = receiver;
     }
 
-    public String getMessageContent() {
+    public static String getMessageContent() {
         return messageContent;
     }
 
